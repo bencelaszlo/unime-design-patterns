@@ -15,7 +15,7 @@ public final class GameManager implements ActionListener {
         for (int i = 0; i < Constants.GAME_FIELD_WIDTH; i++) {
             for (int j = 0; j < Constants.GAME_FIELD_HEIGHT; j++) {
                 int fieldIndex = i + j * Constants.GAME_FIELD_WIDTH;
-                gameField[fieldIndex] = FieldButtonFactory.create(this, i, j);
+                gameField[fieldIndex] = (FieldButton) ButtonFactory.create(ButtonFactory.ButtonType.FieldButton, "", this, i, j);
                 GUI.addFieldButtonToPanel(gameField[fieldIndex]);
             }
         }

@@ -7,6 +7,8 @@ public class GUI {
     private static JPanel panel = new JPanel();
     private static JPanel buttonPanel = new JPanel();
     private static JLabel mainLabel = new JLabel();
+    private static JButton undoButton = new JButton();
+    private static JButton redoButton = new JButton();
 
     private static void setUpFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,11 +26,30 @@ public class GUI {
         mainLabel.setHorizontalAlignment(JLabel.CENTER);
         mainLabel.setText(Constants.TITLE);
         mainLabel.setOpaque(true);
-        panel.add(GUI.mainLabel);
+        mainLabel.setPreferredSize(new Dimension(Constants.FRAME_WIDTH / 3, Constants.PANEL_HEIGHT));
+        panel.add(GUI.mainLabel, BorderLayout.CENTER);
+    }
+
+    public static void setUpUndoButton() {
+        undoButton = ButtonFactory.create(ButtonFactory.ButtonType.ControlPanelButton, "<- Undo", e -> undo(), 0, 0);
+        panel.add(GUI.undoButton, BorderLayout.LINE_START);
+    }
+
+    public static void undo() {
+        System.out.println("UNDO");
+    }
+
+    public static void redo() {
+        System.out.println("REDO");
+    }
+    
+    public static void setUpRedoButton() {
+        redoButton = ButtonFactory.create(ButtonFactory.ButtonType.ControlPanelButton, "Redo ->", e -> redo(), 0, 0);
+        panel.add(GUI.redoButton, BorderLayout.LINE_END);
     }
 
     private static void setUpPanel() {
-        panel.setLayout(new BorderLayout());
+        panel.setLayout(new GridLayout(1, 3));
         panel.setBounds(0, 0, Constants.FRAME_WIDTH, Constants.PANEL_HEIGHT);
     }
 
@@ -40,7 +61,9 @@ public class GUI {
     static void setup() {
         setUpFrame();
         setUpPanel();
+        setUpUndoButton();
         setUpMainLabel();
+        setUpRedoButton();
         setUpButtonPanel();
     }
 

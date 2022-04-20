@@ -5,7 +5,8 @@ class FieldButton extends JButton {
     private Position2D position;
     private Players occupiedBy;
 
-    public FieldButton(int x, int y) {
+    public FieldButton(String text, int x, int y) {
+        this.setText(text);
         this.position = new Position2D(x, y);
         this.occupiedBy = null;
     }

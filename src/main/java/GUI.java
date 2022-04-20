@@ -75,8 +75,7 @@ public class GUI {
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 options,
-                options[0]
-        );
+                options[0]);
     }
 
     static void disableButtons(JButton[] gameField) {

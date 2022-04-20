@@ -16,11 +16,11 @@ public class Constants {
     public static final int PANEL_HEIGHT = 100;
 
     public static final Color COLOR_PLAYER_X = new Color(255, 100, 100);
-    public static final Color COLOR_PLAYER_O = new Color(100, 100 , 255);
+    public static final Color COLOR_PLAYER_O = new Color(100, 100, 255);
     public static final Color COLOR_WINNER_ROW = new Color(0, 0, 0);
     public static final Color COLOR_BACKGROUND = new Color(200, 200, 225);
     public static final Color COLOR_MAIN_LABEL_BACKGROUND = new Color(0, 0, 25);
-    public static final Color COLOR_MAIN_LABEL_FOREGROUND = new Color(225, 225 ,255);
+    public static final Color COLOR_MAIN_LABEL_FOREGROUND = new Color(225, 225, 255);
     public static final Color COLOR_CONTENT_PANE_BACKGROUND = new Color(0, 0, 25);
 
     public static final int GAME_FIELD_WIDTH = 3;

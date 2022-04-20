@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 public final class GameManager implements ActionListener {
     private FieldButton[] gameField = new FieldButton[Constants.GAME_FIELD_HEIGHT * Constants.GAME_FIELD_WIDTH];
     private int turnCounter = 0;
@@ -23,12 +22,14 @@ public final class GameManager implements ActionListener {
 
         GUI.finalizeSetup();
     }
+
     public static GameManager getInstance() {
         return LazyHolder.INSTANCE;
     }
 
     private class LazyHolder {
         LazyHolder() {}
+
         static final GameManager INSTANCE = new GameManager();
     }
 
@@ -53,13 +54,14 @@ public final class GameManager implements ActionListener {
         int n = GUI.showGameOverDialog(s);
         GUI.disposeFrame();
         if (n == 0) {
-           GameManager gameManager = getInstance();
-           gameManager.startGame();
+            GameManager gameManager = getInstance();
+            gameManager.startGame();
         }
     }
 
     public void matchCheck() {
-        ArrayList<ResultChecker.CheckResult> checkResults = resultChecker.matchCheck(this.gameField, new Players[]{Players.X, Players.O}, this.turnCounter);
+        ArrayList<ResultChecker.CheckResult> checkResults = resultChecker.matchCheck(this.gameField,
+                new Players[] { Players.X, Players.O }, this.turnCounter);
 
         for (int i = 0; i < checkResults.size(); i++) {
             if (checkResults.get(i).isWin()) {

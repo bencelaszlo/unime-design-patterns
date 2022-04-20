@@ -4,29 +4,19 @@ import java.util.Arrays;
 public class ResultChecker {
     public class CheckResult {
         private boolean isWin;
-        private boolean isTie;
         private Players player;
         private FieldButton[] winnerFields;
 
         public CheckResult(Players player) {
             this.player = player;
             this.isWin = false;
-            this.isTie = false;
             this.winnerFields = new FieldButton[0];
         }
 
         public CheckResult(Players player, FieldButton[] winnerFields) {
             this.isWin = winnerFields.length > 0;
-            this.isTie = false;
             this.player = player;
             this.winnerFields = winnerFields;
-        }
-
-        public CheckResult() {
-            this.player = null;
-            this.isWin = false;
-            this.isTie = true;
-            this.winnerFields = new FieldButton[0];
         }
 
         public boolean isWin() {
@@ -65,7 +55,8 @@ public class ResultChecker {
     }
 
     private CheckResult checkRowForMatch(FieldButton[] gameField, int rowIndex, Players player) {
-        FieldButton[] buttonRow = Arrays.stream(gameField).filter(field -> field.getPosition().getY() == rowIndex).toArray(FieldButton[]::new);
+        FieldButton[] buttonRow = Arrays.stream(gameField).filter(field -> field.getPosition().getY() == rowIndex)
+                .toArray(FieldButton[]::new);
 
         if (Arrays.stream(buttonRow).allMatch(field -> field.getOccupiedBy() == player)) {
             return new CheckResult(player, buttonRow);
@@ -75,7 +66,8 @@ public class ResultChecker {
     }
 
     private CheckResult checkColumnForMatch(FieldButton[] gameField, int columnIndex, Players player) {
-        FieldButton[] buttonColumn =  Arrays.stream(gameField).filter(field -> field.getPosition().getX() == columnIndex).toArray(FieldButton[]::new);
+        FieldButton[] buttonColumn = Arrays.stream(gameField).filter(field -> field.getPosition().getX() == columnIndex)
+                .toArray(FieldButton[]::new);
 
         if (Arrays.stream(buttonColumn).allMatch(field -> field.getOccupiedBy() == player)) {
             return new CheckResult(player, buttonColumn);
@@ -85,12 +77,15 @@ public class ResultChecker {
     }
 
     private CheckResult checkDiagonalsForMatch(FieldButton[] gameField, Players player) {
-        FieldButton[] mainDiagonal = Arrays.stream(gameField).filter(field -> field.getPosition().getX() == field.getPosition().getY()).toArray(FieldButton[]::new);
+        FieldButton[] mainDiagonal = Arrays.stream(gameField)
+                .filter(field -> field.getPosition().getX() == field.getPosition().getY()).toArray(FieldButton[]::new);
         if (Arrays.stream(mainDiagonal).allMatch(field -> field.getOccupiedBy() == player)) {
             return new CheckResult(player, mainDiagonal);
         }
 
-        FieldButton[] otherDiagonal = Arrays.stream(gameField).filter(field -> Constants.GAME_FIELD_WIDTH - field.getPosition().getY() - field.getPosition().getX() == 1).toArray(FieldButton[]::new);
+        FieldButton[] otherDiagonal = Arrays.stream(gameField).filter(
+                field -> Constants.GAME_FIELD_WIDTH - field.getPosition().getY() - field.getPosition().getX() == 1)
+                .toArray(FieldButton[]::new);
         if (Arrays.stream(otherDiagonal).allMatch(field -> field.getOccupiedBy() == player)) {
             return new CheckResult(player, otherDiagonal);
         }

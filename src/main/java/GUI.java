@@ -6,44 +6,45 @@ public class GUI {
     private static JFrame frame = new JFrame();
     private static JPanel panel = new JPanel();
     private static JPanel buttonPanel = new JPanel();
-    private static JLabel textField  = new JLabel();
+    private static JLabel mainLabel = new JLabel();
 
     private static void setUpFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
-        frame.getContentPane().setBackground(new Color(50, 50, 50));
+        frame.setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
+        frame.getContentPane().setBackground(Constants.COLOR_CONTENT_PANE_BACKGROUND);
         frame.setTitle(Constants.TITLE);
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
     }
 
-    private static void setUpTextField() {
-        textField.setBackground(new Color(120, 20, 124));
-        textField.setForeground(new Color(25, 255, 0));
-        textField.setFont(new Font("Ink Free", Font.BOLD, 75));
-        textField.setHorizontalAlignment(JLabel.CENTER);
-        textField.setText(Constants.TITLE);
-        textField.setOpaque(true);
+    private static void setUpMainLabel() {
+        mainLabel.setBackground(Constants.COLOR_MAIN_LABEL_BACKGROUND);
+        mainLabel.setForeground(Constants.COLOR_MAIN_LABEL_FOREGROUND);
+        mainLabel.setFont(new Font(Constants.FONT_NAME, Font.BOLD, Constants.FONT_SIZE_MAIN_LABEL));
+        mainLabel.setHorizontalAlignment(JLabel.CENTER);
+        mainLabel.setText(Constants.TITLE);
+        mainLabel.setOpaque(true);
+        panel.add(GUI.mainLabel);
     }
 
     private static void setUpPanel() {
         panel.setLayout(new BorderLayout());
-        panel.setBounds(0, 0, 800, 100);
+        panel.setBounds(0, 0, Constants.FRAME_WIDTH, Constants.PANEL_HEIGHT);
     }
 
     private static void setUpButtonPanel() {
         buttonPanel.setLayout(new GridLayout(Constants.GAME_FIELD_HEIGHT, Constants.GAME_FIELD_WIDTH));
-        buttonPanel.setBackground(new Color(150, 150, 150));
+        buttonPanel.setBackground(Constants.COLOR_BACKGROUND);
     }
 
     static void setup() {
         setUpFrame();
-        setUpTextField();
         setUpPanel();
-        setUpButtonPanel();    }
+        setUpMainLabel();
+        setUpButtonPanel();
+    }
 
     static void finalizeSetup() {
-        panel.add(GUI.textField);
         addComponentToFrame(GUI.panel, BorderLayout.NORTH);
         addComponentToFrame(GUI.buttonPanel);
     }
@@ -61,7 +62,7 @@ public class GUI {
     }
 
     static void setMainLabelText(String text) {
-        textField.setText(text);
+        mainLabel.setText(text);
     }
 
     static int showGameOverDialog(String endGameScenario) {

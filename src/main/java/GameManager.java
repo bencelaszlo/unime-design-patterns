@@ -13,18 +13,6 @@ public final class GameManager implements ActionListener {
     };
 
     private GameManager() {
-        GUIFacade.setup();
-
-        for (int i = 0; i < Constants.GAME_FIELD_WIDTH; i++) {
-            for (int j = 0; j < Constants.GAME_FIELD_HEIGHT; j++) {
-                int fieldIndex = i + j * Constants.GAME_FIELD_WIDTH;
-                gameField[fieldIndex] = (FieldButton) ButtonFactory.create(ButtonFactory.ButtonType.FieldButton, "",
-                        this, i, j);
-                GUIFacade.addFieldButtonToPanel(gameField[fieldIndex]);
-            }
-        }
-
-        GUIFacade.finalizeSetup();
     }
 
     public static GameManager getInstance() {
@@ -43,6 +31,17 @@ public final class GameManager implements ActionListener {
     }
 
     public void startGame() {
+        GUIFacade.setup();
+
+        for (int i = 0; i < Constants.GAME_FIELD_WIDTH; i++) {
+            for (int j = 0; j < Constants.GAME_FIELD_HEIGHT; j++) {
+                int fieldIndex = i + j * Constants.GAME_FIELD_WIDTH;
+                gameField[fieldIndex] = (FieldButton) ButtonFactory.create(ButtonFactory.ButtonType.FieldButton, "",
+                        this, i, j);
+                GUIFacade.addFieldButtonToPanel(gameField[fieldIndex]);
+            }
+        }
+
         isPlayerXChance = true;
         turnCounter = 0;
         checkForMatchContext = new CheckForMatchContext();
@@ -53,10 +52,9 @@ public final class GameManager implements ActionListener {
         GUIFacade.setMainLabelText(s);
 
         int n = GUIFacade.showGameOverDialog(s);
-        GUIFacade.disposeFrame();
+        GUIFacade.disposeGUI();
         if (n == 0) {
-            GameManager gameManager = getInstance();
-            gameManager.startGame();
+            startGame();
         }
     }
 

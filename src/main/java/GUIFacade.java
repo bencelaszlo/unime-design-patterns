@@ -15,6 +15,7 @@ public class GUIFacade {
     }
 
     private static void setUpFrame() {
+        frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
         frame.getContentPane().setBackground(Constants.COLOR_CONTENT_PANE_BACKGROUND);
@@ -24,6 +25,7 @@ public class GUIFacade {
     }
 
     private static void setUpMainLabel() {
+        mainLabel = new JLabel();
         mainLabel.setBackground(Constants.COLOR_MAIN_LABEL_BACKGROUND);
         mainLabel.setForeground(Constants.COLOR_MAIN_LABEL_FOREGROUND);
         mainLabel.setFont(new Font(Constants.FONT_NAME, Font.BOLD, Constants.FONT_SIZE_MAIN_LABEL));
@@ -53,13 +55,17 @@ public class GUIFacade {
     }
 
     private static void setUpPanel() {
+        panel = new JPanel();
         panel.setLayout(new GridLayout(1, 3));
         panel.setBounds(0, 0, Constants.FRAME_WIDTH, Constants.PANEL_HEIGHT);
+        addComponentToFrame(panel, BorderLayout.NORTH);
     }
 
     private static void setUpButtonPanel() {
+        buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(Constants.GAME_FIELD_HEIGHT, Constants.GAME_FIELD_WIDTH));
         buttonPanel.setBackground(Constants.COLOR_BACKGROUND);
+        addComponentToFrame(buttonPanel);
     }
 
     static void setup() {
@@ -69,11 +75,6 @@ public class GUIFacade {
         setUpMainLabel();
         setUpRedoButton();
         setUpButtonPanel();
-    }
-
-    static void finalizeSetup() {
-        addComponentToFrame(GUIFacade.panel, BorderLayout.NORTH);
-        addComponentToFrame(GUIFacade.buttonPanel);
     }
 
     static void addFieldButtonToPanel(JButton button) {
@@ -117,7 +118,7 @@ public class GUIFacade {
         Arrays.stream(gameField).forEach(field -> field.setEnabled((false)));
     }
 
-    static void disposeFrame() {
+    static void disposeGUI() {
         frame.dispose();
     }
 }

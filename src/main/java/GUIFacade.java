@@ -2,13 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
-public class GUI {
+public class GUIFacade {
     private static JFrame frame = new JFrame();
     private static JPanel panel = new JPanel();
     private static JPanel buttonPanel = new JPanel();
     private static JLabel mainLabel = new JLabel();
     private static JButton undoButton = new JButton();
     private static JButton redoButton = new JButton();
+
+    static Color getCurrentPlayerColor(boolean isPlayerXChance) {
+        return isPlayerXChance ? Constants.COLOR_PLAYER_X : Constants.COLOR_PLAYER_O;
+    }
 
     private static void setUpFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,12 +31,12 @@ public class GUI {
         mainLabel.setText(Constants.TITLE);
         mainLabel.setOpaque(true);
         mainLabel.setPreferredSize(new Dimension(Constants.FRAME_WIDTH / 3, Constants.PANEL_HEIGHT));
-        panel.add(GUI.mainLabel, BorderLayout.CENTER);
+        panel.add(GUIFacade.mainLabel, BorderLayout.CENTER);
     }
 
     public static void setUpUndoButton() {
         undoButton = ButtonFactory.create(ButtonFactory.ButtonType.ControlPanelButton, "<- Undo", e -> undo(), 0, 0);
-        panel.add(GUI.undoButton, BorderLayout.LINE_START);
+        panel.add(GUIFacade.undoButton, BorderLayout.LINE_START);
     }
 
     public static void undo() {
@@ -42,10 +46,10 @@ public class GUI {
     public static void redo() {
         System.out.println("REDO");
     }
-    
+
     public static void setUpRedoButton() {
         redoButton = ButtonFactory.create(ButtonFactory.ButtonType.ControlPanelButton, "Redo ->", e -> redo(), 0, 0);
-        panel.add(GUI.redoButton, BorderLayout.LINE_END);
+        panel.add(GUIFacade.redoButton, BorderLayout.LINE_END);
     }
 
     private static void setUpPanel() {
@@ -68,8 +72,8 @@ public class GUI {
     }
 
     static void finalizeSetup() {
-        addComponentToFrame(GUI.panel, BorderLayout.NORTH);
-        addComponentToFrame(GUI.buttonPanel);
+        addComponentToFrame(GUIFacade.panel, BorderLayout.NORTH);
+        addComponentToFrame(GUIFacade.buttonPanel);
     }
 
     static void addFieldButtonToPanel(JButton button) {
@@ -91,7 +95,7 @@ public class GUI {
     static int showGameOverDialog(String endGameScenario) {
         Object[] options = Constants.GAME_OVER_DIALOG_OPTIONS;
 
-        return JOptionPane.showOptionDialog(GUI.frame,
+        return JOptionPane.showOptionDialog(GUIFacade.frame,
                 Constants.GAME_OVER + "\n" + endGameScenario,
                 Constants.GAME_OVER,
                 JOptionPane.YES_NO_CANCEL_OPTION,

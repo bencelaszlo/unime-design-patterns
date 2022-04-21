@@ -12,7 +12,7 @@ class FieldButton extends JButton {
     }
 
     public Position2D getPosition() {
-        return this.position;
+        return position;
     }
 
     private void setOccupiedBy(Players player) {
@@ -20,16 +20,16 @@ class FieldButton extends JButton {
     }
 
     public Players getOccupiedBy() {
-        return this.occupiedBy;
+        return occupiedBy;
     }
 
     public void occupy(Players currentPlayer, Color currentPlayerColor) {
-        this.setForeground(currentPlayerColor);
-        this.setText(currentPlayer.toString());
-        this.setOccupiedBy(currentPlayer);
+        setForeground(currentPlayerColor);
+        setText(currentPlayer.toString());
+        setOccupiedBy(currentPlayer);
     }
 
     public void markAsWinner() {
-        this.setBackground(Constants.COLOR_WINNER_ROW);
+        setBackground(Constants.COLOR_WINNER_ROW);
     }
 };

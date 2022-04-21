@@ -20,15 +20,15 @@ public class ResultChecker {
         }
 
         public boolean isWin() {
-            return this.isWin;
+            return isWin;
         }
 
         public FieldButton[] getWinnerFields() {
-            return this.winnerFields;
+            return winnerFields;
         }
 
         public Players getPlayer() {
-            return this.player;
+            return player;
         }
     };
 
@@ -96,9 +96,9 @@ public class ResultChecker {
     public ArrayList<CheckResult> matchCheck(FieldButton[] gameField, Players[] players, int turnCounter) {
         ArrayList<CheckResult> checkResults = new ArrayList<>();
         Arrays.stream(players).forEach(player -> {
-            checkResults.add(this.checkRowsForMatch(gameField, player));
-            checkResults.add(this.checkColumnsForMatch(gameField, player));
-            checkResults.add(this.checkDiagonalsForMatch(gameField, player));
+            checkResults.add(checkRowsForMatch(gameField, player));
+            checkResults.add(checkColumnsForMatch(gameField, player));
+            checkResults.add(checkDiagonalsForMatch(gameField, player));
         });
 
         return checkResults;

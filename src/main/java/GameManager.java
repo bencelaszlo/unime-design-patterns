@@ -1,12 +1,16 @@
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public final class GameManager implements ActionListener {
     private FieldButton[] gameField = new FieldButton[Constants.GAME_FIELD_HEIGHT * Constants.GAME_FIELD_WIDTH];
     private int turnCounter = 0;
     private boolean isPlayerXChance;
-    private ResultChecker resultChecker;
+    private CheckForMatchContext checkForMatchContext;
+    private CheckForMatchStrategy[] strategies = new CheckForMatchStrategy[] {
+            new CheckForMatchRowStrategy(),
+            new CheckForMatchColumnStrategy(),
+            new CheckForMatchMainDiagonalStrategy(),
+            new CheckForMatchAntiDiagonalStrategy()
+    };
 
     private GameManager() {
         GUIFacade.setup();
@@ -41,7 +45,7 @@ public final class GameManager implements ActionListener {
     public void startGame() {
         isPlayerXChance = true;
         turnCounter = 0;
-        resultChecker = new ResultChecker();
+        checkForMatchContext = new CheckForMatchContext();
         GUIFacade.setMainLabelText(this.getCurrentPlayer() + " " + Constants.TURN);
     }
 
@@ -57,12 +61,18 @@ public final class GameManager implements ActionListener {
     }
 
     public void matchCheck() {
-        ArrayList<ResultChecker.CheckResult> checkResults = resultChecker.matchCheck(gameField,
-                new Players[] { Players.X, Players.O }, turnCounter);
-
-        for (int i = 0; i < checkResults.size(); i++) {
-            if (checkResults.get(i).isWin()) {
-                onWin(checkResults.get(i));
+        for (int playerIndex = 0; playerIndex < Players.values().length; playerIndex++) {
+            for (int strategyIndex = 0; strategyIndex < strategies.length; strategyIndex++) {
+                checkForMatchContext.setContext(strategies[strategyIndex]);
+                CheckForMatchStrategy.CheckResult result;
+                try {
+                    result = checkForMatchContext.checkForMatch(this.gameField, Players.values()[playerIndex]);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                if (result.isWin()) {
+                    onWin(result);
+                }
             }
         }
 
@@ -71,16 +81,8 @@ public final class GameManager implements ActionListener {
         }
     }
 
-    private void markWinnerRow(FieldButton[] fieldButtons) {
-        Arrays.stream(fieldButtons).forEach(button -> {
-            if (button != null) {
-                button.markAsWinner();
-            }
-        });
-    }
-
-    public void onWin(ResultChecker.CheckResult checkResult) {
-        markWinnerRow(checkResult.getWinnerFields());
+    public void onWin(CheckForMatchStrategy.CheckResult checkResult) {
+        GUIFacade.markWinnerRow(checkResult.getWinnerFields());
         GUIFacade.disableButtons(gameField);
         gameOver(checkResult.getPlayer() + " " + Constants.WINS);
     }

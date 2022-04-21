@@ -105,6 +105,14 @@ public class GUIFacade {
                 options[0]);
     }
 
+    static void markWinnerRow(FieldButton[] fieldButtons) {
+        Arrays.stream(fieldButtons).forEach(button -> {
+            if (button != null) {
+                button.markAsWinner();
+            }
+        });
+    }
+
     static void disableButtons(JButton[] gameField) {
         Arrays.stream(gameField).forEach(field -> field.setEnabled((false)));
     }

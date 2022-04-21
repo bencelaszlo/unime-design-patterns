@@ -31,7 +31,7 @@ public final class GameManager implements ActionListener {
     }
 
     public void startGame() {
-        GUIFacade.setup();
+        GUIFacade.setup(e -> startGame());
 
         for (int i = 0; i < Constants.GAME_FIELD_WIDTH; i++) {
             for (int j = 0; j < Constants.GAME_FIELD_HEIGHT; j++) {

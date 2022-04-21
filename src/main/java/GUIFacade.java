@@ -1,14 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class GUIFacade {
     private static JFrame frame = new JFrame();
     private static JPanel panel = new JPanel();
-    private static JPanel buttonPanel = new JPanel();
+    private static JButton restartButton = new JButton();
     private static JLabel mainLabel = new JLabel();
-    private static JButton undoButton = new JButton();
-    private static JButton redoButton = new JButton();
+    private static JPanel buttonPanel = new JPanel();
 
     static Color getCurrentPlayerColor(boolean isPlayerXChance) {
         return isPlayerXChance ? Constants.COLOR_PLAYER_X : Constants.COLOR_PLAYER_O;
@@ -32,32 +32,21 @@ public class GUIFacade {
         mainLabel.setHorizontalAlignment(JLabel.CENTER);
         mainLabel.setText(Constants.TITLE);
         mainLabel.setOpaque(true);
-        mainLabel.setPreferredSize(new Dimension(Constants.FRAME_WIDTH / 3, Constants.PANEL_HEIGHT));
-        panel.add(GUIFacade.mainLabel, BorderLayout.CENTER);
+        mainLabel.setPreferredSize(new Dimension(Constants.FRAME_WIDTH / 2, Constants.PANEL_HEIGHT));
+        panel.add(GUIFacade.mainLabel);
     }
 
-    public static void setUpUndoButton() {
-        undoButton = ButtonFactory.create(ButtonFactory.ButtonType.ControlPanelButton, "<- Undo", e -> undo(), 0, 0);
-        panel.add(GUIFacade.undoButton, BorderLayout.LINE_START);
+
+    public static void setUpRestartButton(ActionListener actionListener) {
+        restartButton = ButtonFactory.create(ButtonFactory.ButtonType.ControlPanelButton, "Restart Game", actionListener, 0, 0);
+        panel.add(GUIFacade.restartButton);
     }
 
-    public static void undo() {
-        System.out.println("UNDO");
-    }
-
-    public static void redo() {
-        System.out.println("REDO");
-    }
-
-    public static void setUpRedoButton() {
-        redoButton = ButtonFactory.create(ButtonFactory.ButtonType.ControlPanelButton, "Redo ->", e -> redo(), 0, 0);
-        panel.add(GUIFacade.redoButton, BorderLayout.LINE_END);
-    }
-
-    private static void setUpPanel() {
+    private static void setUpPanel(ActionListener restartActionListener) {
         panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 3));
+        panel.setLayout(new GridLayout(1, 2));
         panel.setBounds(0, 0, Constants.FRAME_WIDTH, Constants.PANEL_HEIGHT);
+        setUpRestartButton(restartActionListener);
         addComponentToFrame(panel, BorderLayout.NORTH);
     }
 
@@ -68,12 +57,10 @@ public class GUIFacade {
         addComponentToFrame(buttonPanel);
     }
 
-    static void setup() {
+    static void setup(ActionListener restartActionListener) {
         setUpFrame();
-        setUpPanel();
-        setUpUndoButton();
+        setUpPanel(restartActionListener);
         setUpMainLabel();
-        setUpRedoButton();
         setUpButtonPanel();
     }
 
